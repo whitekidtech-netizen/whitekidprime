@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#04050d">
+<meta name="description" content="Link your WhatsApp to Whitekid Prime in under a minute.">
+<title>Whitekid Prime — Link your WhatsApp</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E%F0%9F%91%91%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@600;800&family=Orbitron:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#04050d; --ink:#eef0ff; --mute:#9aa0c3; --line:rgba(255,255,255,.1);
+  --v:#8b5cf6; --c:#22d3ee; --g:#34d399; --gold:#fbbf24; --red:#fb7185;
+  --mono:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --disp:Orbitron,"Segoe UI",system-ui,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%}
+body{
+  min-height:100vh;min-height:100dvh;color:var(--ink);overflow-x:hidden;
+  font:16px/1.5 Inter,system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+  background:
+    radial-gradient(1100px 700px at 85% -10%,#1d1250 0,transparent 60%),
+    radial-gradient(900px 600px at -10% 110%,#073a52 0,transparent 55%),
+    var(--bg);
+}
+#bg,#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none}
+#bg{z-index:0}
+#confetti{z-index:50}
+.aurora{position:fixed;inset:0;z-index:0;pointer-events:none;overflow:hidden}
+.aurora i{position:absolute;width:46vmax;height:46vmax;border-radius:50%;filter:blur(90px);opacity:.28;animation:drift 22s ease-in-out infinite alternate}
+.aurora i:nth-child(1){background:var(--v);top:-18vmax;left:-10vmax}
+.aurora i:nth-child(2){background:var(--c);bottom:-22vmax;right:-12vmax;animation-delay:-7s;opacity:.2}
+.aurora i:nth-child(3){background:#ec4899;top:30%;left:55%;width:30vmax;height:30vmax;animation-delay:-13s;opacity:.12}
+@keyframes drift{to{transform:translate3d(8vmax,5vmax,0) scale(1.15)}}
+
+.wrap{position:relative;z-index:2;min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;padding:28px 16px 20px}
+
+/* ── brand ── */
+.brand{text-align:center;display:grid;gap:10px;justify-items:center}
+.logo{width:68px;height:68px;filter:drop-shadow(0 8px 26px rgba(139,92,246,.6));animation:float 5s ease-in-out infinite}
+@keyframes float{50%{transform:translateY(-6px)}}
+h1{font:900 clamp(26px,6vw,38px)/1.05 var(--disp);letter-spacing:.06em}
+h1 span{background:linear-gradient(90deg,var(--c),var(--v) 55%,#ec4899);-webkit-background-clip:text;background-clip:text;color:transparent;background-size:200% 100%;animation:flow 6s linear infinite}
+@keyframes flow{to{background-position:200% 0}}
+.tag{color:var(--mute);font-size:15px}
+.pill{display:inline-flex;align-items:center;gap:8px;padding:6px 14px;border-radius:99px;border:1px solid var(--line);background:rgba(255,255,255,.04);font-size:12.5px;color:var(--mute);backdrop-filter:blur(8px)}
+.dot{width:8px;height:8px;border-radius:50%;background:#64748b;box-shadow:0 0 0 0 transparent}
+.pill.on .dot{background:var(--g);animation:ping 2s infinite}
+.pill.off .dot{background:var(--red)}
+@keyframes ping{0%{box-shadow:0 0 0 0 rgba(52,211,153,.6)}80%,100%{box-shadow:0 0 0 9px rgba(52,211,153,0)}}
+
+/* ── card ── */
+.card{
+  --mx:50%;--my:0%;position:relative;width:min(520px,100%);padding:26px 24px 24px;border-radius:28px;
+  background:linear-gradient(180deg,rgba(255,255,255,.075),rgba(255,255,255,.03));
+  border:1px solid var(--line);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);
+  box-shadow:0 40px 90px -24px rgba(0,0,0,.75),inset 0 1px 0 rgba(255,255,255,.09);
+}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(420px circle at var(--mx) var(--my),rgba(139,92,246,.16),transparent 60%)}
+.view{position:relative;animation:rise .55s cubic-bezier(.2,.8,.2,1) both}
+@keyframes rise{from{opacity:0;transform:translateY(14px) scale(.985)}}
+
+/* stepper */
+.steps{--lw:64px;list-style:none;display:flex;justify-content:space-between;position:relative;margin:0 4px 26px}
+.steps::before{content:"";position:absolute;left:calc(var(--lw)/2);right:calc(var(--lw)/2);top:15px;height:2px;background:var(--line)}
+.steps .bar{position:absolute;left:calc(var(--lw)/2);top:15px;height:2px;width:0;background:linear-gradient(90deg,var(--c),var(--v));transition:width .6s cubic-bezier(.3,.8,.2,1);border-radius:2px}
+.steps li{position:relative;z-index:1;display:grid;justify-items:center;gap:6px;font-size:11.5px;color:var(--mute);width:var(--lw);text-align:center}
+.steps b{width:32px;height:32px;border-radius:50%;display:grid;place-items:center;font:700 13px var(--mono);background:#0c0e20;border:1.5px solid var(--line);transition:.4s}
+.steps li.active{color:var(--ink)}
+.steps li.active b{border-color:var(--c);box-shadow:0 0 0 5px rgba(34,211,238,.14),0 0 22px rgba(34,211,238,.45);color:#fff}
+.steps li.done b{background:linear-gradient(135deg,var(--c),var(--v));border-color:transparent;color:#fff}
+
+h2{font-size:21px;font-weight:800;letter-spacing:-.01em}
+.sub{color:var(--mute);font-size:14.5px;margin:4px 0 18px}
+
+/* field */
+label.l{display:block;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);margin-bottom:8px}
+.fieldwrap{position:relative}
+.field{display:flex;align-items:stretch;border:1.5px solid var(--line);border-radius:16px;background:rgba(0,0,0,.38);transition:.25s}
+.field:focus-within{border-color:var(--c);box-shadow:0 0 0 4px rgba(34,211,238,.13)}
+.field.bad{border-color:var(--red);box-shadow:0 0 0 4px rgba(251,113,133,.12);animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.cc{display:flex;align-items:center;gap:8px;padding:0 12px 0 14px;background:none;border:0;border-right:1px solid var(--line);color:var(--ink);font:600 16px Inter,sans-serif;cursor:pointer;border-radius:16px 0 0 16px;white-space:nowrap}
+.cc:hover{background:rgba(255,255,255,.05)}
+.cc .fl{font-size:22px;line-height:1}
+.cc svg{width:12px;height:12px;opacity:.6}
+.field input{flex:1;min-width:0;background:none;border:0;outline:0;color:var(--ink);padding:16px 14px;font:600 19px var(--mono);letter-spacing:.02em}
+.field input::placeholder{color:#555b82;font-weight:500}
+.hint{min-height:22px;margin-top:9px;font-size:13.5px;color:var(--mute);display:flex;align-items:center;gap:6px}
+.hint.ok{color:var(--g)} .hint.err{color:var(--red)}
+
+.pop{position:absolute;z-index:30;left:0;right:0;top:calc(100% + 8px);background:#0a0c1d;border:1px solid var(--line);border-radius:16px;box-shadow:0 30px 60px -10px rgba(0,0,0,.8);overflow:hidden;animation:rise .25s both}
+.pop input{width:100%;padding:13px 16px;background:rgba(255,255,255,.04);border:0;border-bottom:1px solid var(--line);color:var(--ink);font:500 15px Inter,sans-serif;outline:0}
+.pop ul{list-style:none;max-height:260px;overflow:auto;overscroll-behavior:contain}
+.pop li button{width:100%;display:flex;align-items:center;gap:12px;padding:10px 16px;background:none;border:0;color:var(--ink);font:500 15px Inter,sans-serif;text-align:left;cursor:pointer}
+.pop li button:hover,.pop li button:focus-visible,.pop li button.sel{background:rgba(139,92,246,.18);outline:0}
+.pop li .fl{font-size:20px}.pop li em{margin-left:auto;font:600 13px var(--mono);color:var(--mute);font-style:normal}
+
+/* buttons */
+.btn{position:relative;overflow:hidden;width:100%;height:56px;border:0;border-radius:16px;cursor:pointer;color:#fff;font:700 16px Inter,sans-serif;letter-spacing:.02em;
+  background:linear-gradient(110deg,#7c3aed,#2563eb 50%,#06b6d4);background-size:200% 100%;transition:transform .15s,box-shadow .3s,background-position .6s;
+  box-shadow:0 14px 34px -10px rgba(99,102,241,.75);display:flex;align-items:center;justify-content:center;gap:10px;margin-top:14px}
+.btn:hover:not(:disabled){transform:translateY(-2px);background-position:100% 0;box-shadow:0 20px 44px -10px rgba(99,102,241,.9)}
+.btn:active:not(:disabled){transform:translateY(0) scale(.99)}
+.btn:disabled{opacity:.45;cursor:not-allowed;filter:saturate(.6)}
+.btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);animation:sheen 3.4s infinite}
+.btn:disabled::after{display:none}
+@keyframes sheen{60%,100%{left:130%}}
+.btn.ghost{background:rgba(255,255,255,.06);border:1px solid var(--line);box-shadow:none;height:48px;font-size:14.5px;margin-top:0}
+.btn.ghost::after{display:none}
+.btn.ghost:hover:not(:disabled){background:rgba(255,255,255,.11);box-shadow:none}
+.spin{width:20px;height:20px;border-radius:50%;border:3px solid rgba(255,255,255,.3);border-top-color:#fff;animation:rot .7s linear infinite}
+@keyframes rot{to{transform:rotate(360deg)}}
+.row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:16px}
+
+.trust{display:flex;gap:16px;justify-content:center;flex-wrap:wrap;margin-top:18px;font-size:12.5px;color:var(--mute)}
+.trust span{display:inline-flex;align-items:center;gap:6px}
+
+/* code view */
+.codehead{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:6px}
+.ring{position:relative;width:58px;height:58px;flex:none}
+.ring svg{width:58px;height:58px;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:4.5}
+.ring .tr{stroke:rgba(255,255,255,.09)}
+.ring .pr{stroke:url(#grad);stroke-linecap:round;stroke-dasharray:163.4;stroke-dashoffset:0;transition:stroke-dashoffset .25s linear,stroke .3s}
+.ring.low .pr{stroke:var(--red)}
+.ring span{position:absolute;inset:0;display:grid;place-items:center;font:700 13px var(--mono)}
+.codebox{--tw:clamp(24px,7.8vw,42px);display:flex;justify-content:center;align-items:center;gap:6px;margin:20px 0 14px;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.tile{width:var(--tw);height:calc(var(--tw)*1.42);display:grid;place-items:center;border-radius:11px;font:800 clamp(18px,5.6vw,30px) var(--mono);color:#fff;
+  background:linear-gradient(180deg,rgba(139,92,246,.28),rgba(34,211,238,.1));border:1.5px solid rgba(139,92,246,.55);
+  box-shadow:0 8px 24px -8px rgba(139,92,246,.6),inset 0 1px 0 rgba(255,255,255,.18);animation:pop .5s cubic-bezier(.2,1.4,.3,1) both}
+@keyframes pop{from{opacity:0;transform:translateY(16px) scale(.7) rotate(-6deg)}}
+.dash{color:var(--mute);font:700 20px var(--mono)}
+.codebox.expired .tile{opacity:.3;filter:grayscale(1);border-color:var(--line);box-shadow:none}
+.codebox:hover .tile{border-color:var(--c)}
+.status{display:flex;align-items:center;justify-content:center;gap:8px;text-align:center;font-size:14px;color:var(--mute);min-height:24px}
+.status.exp{color:var(--red)}
+.wait i{display:inline-block;width:6px;height:6px;margin:0 2px;border-radius:50%;background:var(--c);animation:bounce 1.2s infinite}
+.wait i:nth-child(2){animation-delay:.15s}.wait i:nth-child(3){animation-delay:.3s}
+@keyframes bounce{0%,60%,100%{transform:translateY(0);opacity:.4}30%{transform:translateY(-6px);opacity:1}}
+.how{list-style:none;counter-reset:s;margin:18px 0 4px;display:grid;gap:9px}
+.how li{counter-increment:s;display:flex;gap:12px;align-items:flex-start;padding:11px 13px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid var(--line);font-size:14px;color:#cdd2f0}
+.how li::before{content:counter(s);flex:none;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;font:700 12px var(--mono);background:linear-gradient(135deg,var(--c),var(--v));color:#fff}
+.how b{color:#fff}.how li span{flex:1;min-width:0;padding-top:2px}
+
+/* success */
+.okwrap{text-align:center;padding:6px 0 2px}
+.check{width:104px;height:104px;margin:4px auto 14px;filter:drop-shadow(0 0 28px rgba(52,211,153,.55))}
+.check circle{fill:rgba(52,211,153,.1);stroke:var(--g);stroke-width:3;stroke-dasharray:302;stroke-dashoffset:302;animation:draw .8s .1s ease forwards}
+.check path{fill:none;stroke:var(--g);stroke-width:5;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:60;stroke-dashoffset:60;animation:draw .5s .7s ease forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+.okwrap h2{font-size:26px;background:linear-gradient(90deg,var(--g),var(--c));-webkit-background-clip:text;background-clip:text;color:transparent}
+.num{display:inline-block;margin:12px 0 4px;padding:7px 16px;border-radius:99px;background:rgba(52,211,153,.1);border:1px solid rgba(52,211,153,.35);font:700 15px var(--mono);color:#a7f3d0}
+.cmdhint{margin:18px 0 6px;padding:14px;border-radius:16px;background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.18);font-size:14.5px;color:#cdd2f0}
+.cmdhint code{font:800 17px var(--mono);color:var(--gold);background:rgba(251,191,36,.1);padding:2px 9px;border-radius:8px}
+
+.err{margin-top:14px;padding:12px 14px;border-radius:14px;background:rgba(251,113,133,.1);border:1px solid rgba(251,113,133,.35);color:#fecdd3;font-size:14px;display:flex;gap:10px;align-items:flex-start}
+footer{position:relative;z-index:2;text-align:center;font-size:12.5px;color:#6b7194;display:grid;gap:4px}
+footer a{color:#a5b4fc;text-decoration:none}footer a:hover{text-decoration:underline}
+#toast{position:fixed;left:50%;bottom:26px;transform:translate(-50%,30px);opacity:0;z-index:60;padding:12px 18px;border-radius:14px;background:#12142b;border:1px solid var(--line);box-shadow:0 20px 40px rgba(0,0,0,.6);font-size:14px;transition:.35s cubic-bezier(.2,.9,.3,1);pointer-events:none;max-width:90vw}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+:focus-visible{outline:2px solid var(--c);outline-offset:2px}
+@media (max-width:420px){.card{padding:22px 16px}.steps{--lw:54px}.steps li{font-size:10.5px}.field input{font-size:17px}}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+</style>
+</head>
+<body>
+<canvas id="bg" aria-hidden="true"></canvas>
+<canvas id="confetti" aria-hidden="true"></canvas>
+<div class="aurora" aria-hidden="true"><i></i><i></i><i></i></div>
+
+<main class="wrap">
+  <header class="brand">
+    <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+      <defs>
+        <linearGradient id="lg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset=".55" stop-color="#8b5cf6"/><stop offset="1" stop-color="#ec4899"/></linearGradient>
+      </defs>
+      <path d="M50 4 90 27v46L50 96 10 73V27z" fill="url(#lg)" opacity=".2"/>
+      <path d="M50 4 90 27v46L50 96 10 73V27z" fill="none" stroke="url(#lg)" stroke-width="3.5" stroke-linejoin="round"/>
+      <path d="M27 64 22 38l16 13 12-21 12 21 16-13-5 26z" fill="#fbbf24"/>
+      <rect x="27" y="67" width="46" height="6" rx="3" fill="#f59e0b"/>
+    </svg>
+    <h1>WHITEKID <span>PRIME</span></h1>
+    <p class="tag">Link your WhatsApp in under a minute. 220 commands. Zero passwords.</p>
+    <div class="pill" id="srv" role="status"><span class="dot"></span><span id="srvText">Checking server…</span></div>
+  </header>
+
+  <section class="card" id="card">
+    <ol class="steps" id="steps" aria-label="Progress">
+      <span class="bar" id="stepBar"></span>
+      <li class="active"><b>1</b>Number</li>
+      <li><b>2</b>Get code</li>
+      <li><b>3</b>Link it</li>
+      <li><b>4</b>Live</li>
+    </ol>
+
+    <!-- VIEW 1: number -->
+    <div class="view" id="vForm">
+      <h2>Enter your WhatsApp number</h2>
+      <p class="sub">We'll generate a one-time pairing code. Nothing else is needed.</p>
+      <label class="l" for="num">Phone number</label>
+      <div class="fieldwrap">
+        <div class="field" id="field">
+          <button type="button" class="cc" id="ccBtn" aria-haspopup="listbox" aria-expanded="false" aria-label="Choose country">
+            <span class="fl" id="ccFlag">🌍</span><span id="ccDial">+263</span>
+            <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 4l4 4 4-4"/></svg>
+          </button>
+          <input id="num" type="tel" inputmode="tel" autocomplete="tel-national" placeholder="78 984 6423" maxlength="22" aria-describedby="hint">
+        </div>
+        <div class="pop" id="pop" hidden>
+          <input id="ccSearch" type="search" placeholder="Search country or code…" autocomplete="off" aria-label="Search countries">
+          <ul id="ccList" role="listbox"></ul>
+        </div>
+      </div>
+      <div class="hint" id="hint" aria-live="polite">Tip: you can also paste a full number like +263 78 984 6423</div>
+      <div id="formErr"></div>
+      <button class="btn" id="goBtn" disabled><span id="goTxt">Generate pairing code</span></button>
+      <div class="trust">
+        <span>🔒 Secure</span><span>⚡ Takes ~20 seconds</span><span>🚫 No password needed</span>
+      </div>
+    </div>
+
+    <!-- VIEW 2: code -->
+    <div class="view" id="vCode" hidden>
+      <div class="codehead">
+        <div>
+          <h2>Your pairing code</h2>
+          <p class="sub" style="margin:4px 0 0">For <b id="codeFor" style="color:#fff;font-family:var(--mono)"></b></p>
+        </div>
+        <div class="ring" id="ring" aria-label="Time left">
+          <svg viewBox="0 0 58 58"><defs><linearGradient id="grad" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#22d3ee"/><stop offset="1" stop-color="#8b5cf6"/></linearGradient></defs>
+            <circle class="tr" cx="29" cy="29" r="26"/><circle class="pr" id="pr" cx="29" cy="29" r="26"/></svg>
+          <span id="ringTxt">1:00</span>
+        </div>
+      </div>
+      <div class="codebox" id="codeBox" title="Tap to copy" role="button" tabindex="0" aria-label="Pairing code. Tap to copy."></div>
+      <div class="status wait" id="status"><i></i><i></i><i></i><span>Waiting for you to enter it in WhatsApp</span></div>
+      <button class="btn" id="copyBtn" style="margin-top:16px">📋 Copy code</button>
+      <ol class="how">
+        <li><span>Open <b>WhatsApp</b> on the phone with this number</span></li>
+        <li><span>Go to <b>Settings → Linked Devices → Link a Device</b></span></li>
+        <li><span>Tap <b>Link with phone number instead</b></span></li>
+        <li><span>Type in the code above and you're in</span></li>
+      </ol>
+      <div class="row2">
+        <button class="btn ghost" id="newBtn">↻ New code</button>
+        <button class="btn ghost" id="backBtn">← Change number</button>
+      </div>
+    </div>
+
+    <!-- VIEW 3: success -->
+    <div class="view" id="vOk" hidden>
+      <div class="okwrap">
+        <svg class="check" viewBox="0 0 104 104" aria-hidden="true"><circle cx="52" cy="52" r="48"/><path d="M32 54l14 14 27-30"/></svg>
+        <h2 id="okTitle">You're connected!</h2>
+        <p class="sub" id="okSub" style="margin-bottom:0">Whitekid Prime is now live on your WhatsApp.</p>
+        <div class="num" id="okNum"></div>
+        <div class="cmdhint">Open WhatsApp and send <code>.menu</code> to see everything Prime can do.</div>
+        <button class="btn ghost" id="againBtn" style="margin-top:12px">Link another number</button>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>Built by <b>WhiteKid Tech</b> · © 2026</div>
+    <div><a href="https://t.me/whitekid01" target="_blank" rel="noopener">Telegram</a> · <a href="https://wa.me/263789846423" target="_blank" rel="noopener">WhatsApp support</a></div>
+  </footer>
+</main>
+<div id="toast" role="status" aria-live="polite"></div>
+<noscript><p style="position:relative;z-index:5;text-align:center;padding:20px">Please enable JavaScript to use the pairing portal.</p></noscript>
+
+<script>
+(() => {
+'use strict';
+const $ = s => document.querySelector(s);
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const DEFAULT_ISO = 'ZW';     // fallback country when detection fails
+const CODE_TTL = 60;          // seconds shown on the countdown ring
+
+/* ───────── countries ───────── */
+const RAW = 'ZW|Zimbabwe|263;ZA|South Africa|27;ZM|Zambia|260;MW|Malawi|265;MZ|Mozambique|258;BW|Botswana|267;NA|Namibia|264;AO|Angola|244;TZ|Tanzania|255;KE|Kenya|254;UG|Uganda|256;RW|Rwanda|250;ET|Ethiopia|251;NG|Nigeria|234;GH|Ghana|233;CM|Cameroon|237;SN|Senegal|221;CI|Ivory Coast|225;EG|Egypt|20;MA|Morocco|212;DZ|Algeria|213;TN|Tunisia|216;SD|Sudan|249;CD|DR Congo|243;CG|Congo|242;GA|Gabon|241;LS|Lesotho|266;SZ|Eswatini|268;MG|Madagascar|261;MU|Mauritius|230;SO|Somalia|252;SS|South Sudan|211;ML|Mali|223;BF|Burkina Faso|226;NE|Niger|227;TG|Togo|228;BJ|Benin|229;LR|Liberia|231;SL|Sierra Leone|232;GM|Gambia|220;US|United States|1;CA|Canada|1;GB|United Kingdom|44;IE|Ireland|353;FR|France|33;DE|Germany|49;ES|Spain|34;IT|Italy|39;PT|Portugal|351;NL|Netherlands|31;BE|Belgium|32;CH|Switzerland|41;AT|Austria|43;SE|Sweden|46;NO|Norway|47;DK|Denmark|45;FI|Finland|358;PL|Poland|48;RO|Romania|40;GR|Greece|30;TR|Turkey|90;RU|Russia|7;UA|Ukraine|380;IL|Israel|972;SA|Saudi Arabia|966;AE|United Arab Emirates|971;QA|Qatar|974;KW|Kuwait|965;OM|Oman|968;BH|Bahrain|973;JO|Jordan|962;LB|Lebanon|961;IQ|Iraq|964;IR|Iran|98;PK|Pakistan|92;IN|India|91;BD|Bangladesh|880;LK|Sri Lanka|94;NP|Nepal|977;CN|China|86;JP|Japan|81;KR|South Korea|82;ID|Indonesia|62;MY|Malaysia|60;SG|Singapore|65;TH|Thailand|66;VN|Vietnam|84;PH|Philippines|63;AU|Australia|61;NZ|New Zealand|64;BR|Brazil|55;AR|Argentina|54;CL|Chile|56;CO|Colombia|57;PE|Peru|51;VE|Venezuela|58;MX|Mexico|52';
+const COUNTRIES = RAW.split(';').map(r => { const [iso, name, dial] = r.split('|'); return { iso, name, dial }; });
+const byIso = Object.fromEntries(COUNTRIES.map(c => [c.iso, c]));
+const byDialLen = [...COUNTRIES].sort((a, b) => b.dial.length - a.dial.length);
+const flag = iso => String.fromCodePoint(...[...iso].map(c => 127397 + c.charCodeAt(0)));
+const TZ = {'Africa/Harare':'ZW','Africa/Johannesburg':'ZA','Africa/Lusaka':'ZM','Africa/Blantyre':'MW','Africa/Maputo':'MZ','Africa/Gaborone':'BW','Africa/Windhoek':'NA','Africa/Luanda':'AO','Africa/Dar_es_Salaam':'TZ','Africa/Nairobi':'KE','Africa/Kampala':'UG','Africa/Kigali':'RW','Africa/Addis_Ababa':'ET','Africa/Lagos':'NG','Africa/Accra':'GH','Africa/Douala':'CM','Africa/Dakar':'SN','Africa/Abidjan':'CI','Africa/Cairo':'EG','Africa/Casablanca':'MA','Africa/Algiers':'DZ','Africa/Tunis':'TN','Europe/London':'GB','Europe/Dublin':'IE','Europe/Paris':'FR','Europe/Berlin':'DE','Europe/Madrid':'ES','Europe/Rome':'IT','America/New_York':'US','America/Chicago':'US','America/Denver':'US','America/Los_Angeles':'US','America/Toronto':'CA','America/Sao_Paulo':'BR','America/Mexico_City':'MX','Asia/Kolkata':'IN','Asia/Calcutta':'IN','Asia/Karachi':'PK','Asia/Dhaka':'BD','Asia/Dubai':'AE','Asia/Riyadh':'SA','Asia/Jakarta':'ID','Asia/Manila':'PH','Asia/Singapore':'SG','Asia/Kuala_Lumpur':'MY','Asia/Tokyo':'JP','Asia/Seoul':'KR','Asia/Shanghai':'CN','Australia/Sydney':'AU','Pacific/Auckland':'NZ'};
+function detectIso() {
+  try { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; if (TZ[tz]) return TZ[tz]; } catch {}
+  try { const m = (navigator.language || '').match(/-([A-Za-z]{2})$/); if (m && byIso[m[1].toUpperCase()]) return m[1].toUpperCase(); } catch {}
+  return DEFAULT_ISO;
+}
+
+/* ───────── state ───────── */
+const S = { iso: DEFAULT_ISO, full: '', busy: false, lastGen: 0, tTimer: null, poll: null, expiresAt: 0, code: '' };
+const els = {
+  num: $('#num'), field: $('#field'), hint: $('#hint'), go: $('#goBtn'), goTxt: $('#goTxt'), formErr: $('#formErr'),
+  ccBtn: $('#ccBtn'), ccFlag: $('#ccFlag'), ccDial: $('#ccDial'), pop: $('#pop'), ccSearch: $('#ccSearch'), ccList: $('#ccList')
+};
+
+/* ───────── helpers ───────── */
+let toastT;
+function toast(msg) { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(toastT); toastT = setTimeout(() => t.classList.remove('show'), 2600); }
+function show(id) { for (const v of ['vForm', 'vCode', 'vOk']) $('#' + v).hidden = v !== id; }
+function setStep(n) {
+  [...document.querySelectorAll('#steps li')].forEach((li, i) => { li.classList.toggle('done', i < n - 1); li.classList.toggle('active', i === n - 1); });
+  const st = document.querySelector('#steps'), lw = parseFloat(getComputedStyle(st).getPropertyValue('--lw')) || 64;
+  $('#stepBar').style.width = ((n - 1) / 3 * (st.clientWidth - lw)) + 'px';
+}
+const fmtLocal = d => d.replace(/(\d{3})(?=\d)/g, '$1 ').trim();
+function store(k, v) { try { localStorage.setItem(k, v); } catch {} }
+function load(k) { try { return localStorage.getItem(k); } catch { return null; } }
+
+/* ───────── country picker ───────── */
+function setCountry(iso) {
+  S.iso = byIso[iso] ? iso : DEFAULT_ISO;
+  const c = byIso[S.iso];
+  els.ccFlag.textContent = flag(c.iso); els.ccDial.textContent = '+' + c.dial;
+  validate();
+}
+function renderList(filter = '') {
+  const f = filter.trim().toLowerCase().replace(/^\+/, '');
+  const items = COUNTRIES.filter(c => !f || c.name.toLowerCase().includes(f) || c.iso.toLowerCase() === f || c.dial.startsWith(f));
+  els.ccList.innerHTML = '';
+  for (const c of items) {
+    const li = document.createElement('li'); const b = document.createElement('button');
+    b.type = 'button'; b.setAttribute('role', 'option'); if (c.iso === S.iso) b.className = 'sel';
+    b.innerHTML = `<span class="fl">${flag(c.iso)}</span><span></span><em>+${c.dial}</em>`; b.children[1].textContent = c.name;
+    b.addEventListener('click', () => { setCountry(c.iso); closePop(); els.num.focus(); });
+    li.appendChild(b); els.ccList.appendChild(li);
+  }
+  if (!items.length) { const li = document.createElement('li'); li.style.cssText = 'padding:14px 16px;color:#9aa0c3'; li.textContent = 'No match'; els.ccList.appendChild(li); }
+}
+function openPop() { els.pop.hidden = false; els.ccBtn.setAttribute('aria-expanded', 'true'); els.ccSearch.value = ''; renderList(); setTimeout(() => { els.ccSearch.focus(); const s = els.ccList.querySelector('.sel'); if (s) s.scrollIntoView({ block: 'center' }); }, 20); }
+function closePop() { els.pop.hidden = true; els.ccBtn.setAttribute('aria-expanded', 'false'); }
+els.ccBtn.addEventListener('click', () => els.pop.hidden ? openPop() : closePop());
+els.ccSearch.addEventListener('input', () => renderList(els.ccSearch.value));
+els.ccSearch.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); const b = els.ccList.querySelector('button'); if (b) b.click(); } });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && !els.pop.hidden) { closePop(); els.ccBtn.focus(); } });
+document.addEventListener('click', e => { if (!els.pop.hidden && !e.target.closest('.fieldwrap')) closePop(); });
+
+/* ───────── validation ───────── */
+function localDigits() {
+  let raw = els.num.value.trim(), d = raw.replace(/\D/g, '');
+  if (raw.startsWith('+') || raw.startsWith('00')) {            // full international paste
+    if (raw.startsWith('00')) d = d.slice(2);
+    const m = byDialLen.find(c => d.startsWith(c.dial));
+    if (m && d.length === m.dial.length) return '';                // just the country code so far
+    if (m) {
+      const keep = (byIso[S.iso].dial === m.dial) ? S.iso : m.iso;
+      d = d.slice(m.dial.length);
+      els.num.value = fmtLocal(d.replace(/^0+/, ''));              // rewrite first so re-validation can't loop
+      setCountry(keep);
+    }
+  }
+  return d.replace(/^0+/, '');                                   // drop trunk "0" (e.g. 078…)
+}
+function validate() {
+  const local = localDigits(), dial = byIso[S.iso].dial, full = dial + local;
+  S.full = full;
+  els.field.classList.remove('bad'); els.formErr.innerHTML = '';
+  let ok = false;
+  if (!local) { els.hint.className = 'hint'; els.hint.textContent = 'Tip: you can also paste a full number like +263 78 984 6423'; }
+  else if (local.length < 6) { els.hint.className = 'hint'; els.hint.textContent = 'Keep typing…'; }
+  else if (full.length > 15) { els.hint.className = 'hint err'; els.hint.textContent = 'That number is too long.'; }
+  else { ok = full.length >= 8; els.hint.className = ok ? 'hint ok' : 'hint'; els.hint.textContent = ok ? `✓ Will link +${dial} ${fmtLocal(local)}` : ''; }
+  els.go.disabled = !ok || S.busy;
+  return ok;
+}
+els.num.addEventListener('input', validate);
+els.num.addEventListener('keydown', e => { if (e.key === 'Enter' && !els.go.disabled) generate(); });
+
+/* ───────── pairing flow ───────── */
+function setLoading(on) {
+  S.busy = on; els.go.disabled = on || !validate();
+  els.goTxt.innerHTML = on ? '<span class="spin"></span><span>Summoning your code…</span>' : 'Generate pairing code';
+  els.go.style.gap = '10px';
+}
+function showFormError(msg) {
+  els.formErr.innerHTML = ''; const d = document.createElement('div'); d.className = 'err'; d.setAttribute('role', 'alert');
+  d.innerHTML = '<span>⚠️</span><span></span>'; d.children[1].textContent = msg; els.formErr.appendChild(d);
+  els.field.classList.remove('bad'); void els.field.offsetWidth; els.field.classList.add('bad');
+}
+
+async function generate(fromCodeView) {
+  if (S.busy) return;
+  const wait = 8000 - (Date.now() - S.lastGen);
+  if (fromCodeView && wait > 0) return toast(`Give it ${Math.ceil(wait / 1000)}s before requesting another code`);
+  if (!validate()) return;
+  const number = S.full;
+  S.busy = true; S.lastGen = Date.now();
+  if (fromCodeView) { $('#newBtn').disabled = true; $('#newBtn').textContent = 'Working…'; } else setLoading(true);
+  const ctl = new AbortController(), to = setTimeout(() => ctl.abort(), 70000);
+  try {
+    const r = await fetch('/api/pair?number=' + encodeURIComponent(number), { signal: ctl.signal, headers: { Accept: 'application/json' }, cache: 'no-store' });
+    let data = {}; try { data = await r.json(); } catch {}
+    if (data.status === 'already_connected') return showSuccess(number, true);
+    if (r.status === 429) throw new Error(data.error || 'Too many attempts. Please wait a few minutes.');
+    if (!r.ok || !data.code) throw new Error(data.error || 'Could not get a code right now. Please try again.');
+    store('wk_last', JSON.stringify({ iso: S.iso, local: els.num.value }));
+    showCode(String(data.code).replace(/[^A-Za-z0-9]/g, '').toUpperCase(), number);
+  } catch (e) {
+    const msg = e.name === 'AbortError' ? 'The request timed out. Please try again.' : (e.message || 'Something went wrong.');
+    if (fromCodeView) toast(msg); else showFormError(msg);
+  } finally {
+    clearTimeout(to); S.busy = false;
+    if (fromCodeView) { $('#newBtn').disabled = false; $('#newBtn').textContent = '↻ New code'; } else setLoading(false);
+  }
+}
+
+function renderCode(code) {
+  const box = $('#codeBox'); box.innerHTML = ''; box.classList.remove('expired');
+  [...code].forEach((ch, i) => {
+    if (i === 4) { const d = document.createElement('span'); d.className = 'dash'; d.textContent = '–'; box.appendChild(d); }
+    const s = document.createElement('span'); s.className = 'tile'; s.textContent = ch; s.style.animationDelay = (i * 55) + 'ms'; box.appendChild(s);
+  });
+}
+function showCode(code, number) {
+  S.code = code; stopTimer(); stopPoll();
+  $('#codeFor').textContent = '+' + number; renderCode(code);
+  const st = $('#status'); st.className = 'status wait'; st.innerHTML = '<i></i><i></i><i></i><span>Waiting for you to enter it in WhatsApp</span>';
+  show('vCode'); setStep(3); startTimer(); startPoll(number);
+  setTimeout(() => $('#copyBtn').focus({ preventScroll: true }), 300);
+}
+
+/* countdown ring */
+function startTimer() {
+  const C = 163.4, pr = $('#pr'), ring = $('#ring'), txt = $('#ringTxt');
+  S.expiresAt = Date.now() + CODE_TTL * 1000; ring.classList.remove('low');
+  const tick = () => {
+    const left = Math.max(0, S.expiresAt - Date.now()), sec = Math.ceil(left / 1000);
+    pr.style.strokeDashoffset = C * (1 - left / (CODE_TTL * 1000));
+    txt.textContent = Math.floor(sec / 60) + ':' + String(sec % 60).padStart(2, '0');
+    ring.classList.toggle('low', sec <= 10);
+    if (left <= 0) { stopTimer(); expire(); }
+  };
+  tick(); S.tTimer = setInterval(tick, 250);
+}
+function stopTimer() { clearInterval(S.tTimer); S.tTimer = null; }
+function expire() {
+  $('#codeBox').classList.add('expired');
+  const st = $('#status'); st.className = 'status exp'; st.textContent = '⏰ Code expired — tap “New code” to get a fresh one';
+}
+
+/* poll for connection */
+function startPoll(number) {
+  stopPoll(); const t0 = Date.now();
+  S.poll = setInterval(async () => {
+    if (Date.now() - t0 > 6 * 60 * 1000) return stopPoll();
+    try {
+      const r = await fetch('/api/status?number=' + encodeURIComponent(number), { cache: 'no-store' });
+      const d = await r.json();
+      if (d.connected) { stopPoll(); stopTimer(); showSuccess(number, false); }
+    } catch {}
+  }, 2500);
+}
+function stopPoll() { clearInterval(S.poll); S.poll = null; }
+
+function showSuccess(number, already) {
+  stopPoll(); stopTimer(); show('vOk'); setStep(4);
+  $('#okNum').textContent = '+' + number;
+  $('#okTitle').textContent = already ? 'Already connected!' : "You're connected!";
+  $('#okSub').textContent = already ? 'This number is already linked and Prime is online.' : 'Whitekid Prime is now live on your WhatsApp.';
+  if (!already) burst();
+}
+
+/* copy */
+async function copyCode() {
+  if (!S.code) return;
+  try { await navigator.clipboard.writeText(S.code); }
+  catch { const t = document.createElement('textarea'); t.value = S.code; t.style.cssText = 'position:fixed;opacity:0'; document.body.appendChild(t); t.select(); try { document.execCommand('copy'); } catch {} t.remove(); }
+  const b = $('#copyBtn'); b.textContent = '✓ Copied!'; toast('Code copied — paste it in WhatsApp'); setTimeout(() => b.textContent = '📋 Copy code', 1800);
+}
+$('#copyBtn').addEventListener('click', copyCode);
+$('#codeBox').addEventListener('click', copyCode);
+$('#codeBox').addEventListener('keydown', e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); copyCode(); } });
+$('#newBtn').addEventListener('click', () => generate(true));
+$('#backBtn').addEventListener('click', () => { stopPoll(); stopTimer(); show('vForm'); setStep(1); els.num.focus(); });
+$('#againBtn').addEventListener('click', () => { els.num.value = ''; show('vForm'); setStep(1); validate(); els.num.focus(); });
+els.go.addEventListener('click', () => generate(false));
+
+/* ───────── server pill ───────── */
+async function ping() {
+  const p = $('#srv'), t = $('#srvText');
+  try {
+    const r = await fetch('/ping', { cache: 'no-store' }); const d = await r.json();
+    p.className = 'pill on'; t.textContent = `Online · v${d.version || '5'} · ${d.activesession ?? 0} linked`;
+  } catch { p.className = 'pill off'; t.textContent = 'Server unreachable — retrying…'; }
+}
+ping(); setInterval(ping, 30000);
+
+/* ───────── cursor glow ───────── */
+$('#card').addEventListener('pointermove', e => { const r = e.currentTarget.getBoundingClientRect(); e.currentTarget.style.setProperty('--mx', (e.clientX - r.left) + 'px'); e.currentTarget.style.setProperty('--my', (e.clientY - r.top) + 'px'); });
+
+/* ───────── starfield ───────── */
+(function stars() {
+  const c = $('#bg'), x = c.getContext('2d'); let w, h, dpr, pts = [], raf;
+  const mouse = { x: -999, y: -999 };
+  function size() {
+    dpr = Math.min(devicePixelRatio || 1, 2); w = innerWidth; h = innerHeight;
+    c.width = w * dpr; c.height = h * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.min(90, Math.floor(w * h / 17000));
+    pts = Array.from({ length: n }, () => ({ x: Math.random() * w, y: Math.random() * h, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25, r: Math.random() * 1.4 + .4 }));
+  }
+  function frame() {
+    x.clearRect(0, 0, w, h);
+    for (const p of pts) {
+      p.x += p.vx; p.y += p.vy; if (p.x < 0 || p.x > w) p.vx *= -1; if (p.y < 0 || p.y > h) p.vy *= -1;
+      x.beginPath(); x.arc(p.x, p.y, p.r, 0, 6.283); x.fillStyle = 'rgba(190,200,255,.7)'; x.fill();
+    }
+    for (let i = 0; i < pts.length; i++) for (let j = i + 1; j < pts.length; j++) {
+      const a = pts[i], b = pts[j], d = Math.hypot(a.x - b.x, a.y - b.y);
+      if (d < 120) { x.strokeStyle = `rgba(139,92,246,${(1 - d / 120) * .35})`; x.lineWidth = .7; x.beginPath(); x.moveTo(a.x, a.y); x.lineTo(b.x, b.y); x.stroke(); }
+    }
+    for (const p of pts) { const d = Math.hypot(p.x - mouse.x, p.y - mouse.y); if (d < 150) { x.strokeStyle = `rgba(34,211,238,${(1 - d / 150) * .55})`; x.beginPath(); x.moveTo(p.x, p.y); x.lineTo(mouse.x, mouse.y); x.stroke(); } }
+    raf = requestAnimationFrame(frame);
+  }
+  size(); addEventListener('resize', size);
+  addEventListener('pointermove', e => { mouse.x = e.clientX; mouse.y = e.clientY; }, { passive: true });
+  if (reduce) { frame(); cancelAnimationFrame(raf); return; }
+  frame();
+  document.addEventListener('visibilitychange', () => { cancelAnimationFrame(raf); if (!document.hidden) frame(); });
+})();
+
+/* ───────── confetti ───────── */
+function burst() {
+  if (reduce) return;
+  const c = $('#confetti'), x = c.getContext('2d'), dpr = Math.min(devicePixelRatio || 1, 2);
+  const w = c.width = innerWidth * dpr, h = c.height = innerHeight * dpr; x.setTransform(1, 0, 0, 1, 0, 0);
+  const colors = ['#22d3ee', '#8b5cf6', '#ec4899', '#fbbf24', '#34d399', '#fff'];
+  const ps = Array.from({ length: 150 }, () => ({
+    x: w / 2 + (Math.random() - .5) * w * .3, y: h * .35, vx: (Math.random() - .5) * 22 * dpr, vy: (-Math.random() * 18 - 6) * dpr,
+    s: (Math.random() * 7 + 4) * dpr, rot: Math.random() * 6, vr: (Math.random() - .5) * .4, col: colors[Math.floor(Math.random() * colors.length)]
+  }));
+  const t0 = performance.now();
+  (function step(t) {
+    const age = t - t0; x.clearRect(0, 0, w, h);
+    for (const p of ps) {
+      p.vy += .55 * dpr; p.vx *= .992; p.x += p.vx; p.y += p.vy; p.rot += p.vr;
+      x.save(); x.translate(p.x, p.y); x.rotate(p.rot); x.globalAlpha = Math.max(0, 1 - age / 3600); x.fillStyle = p.col; x.fillRect(-p.s / 2, -p.s / 4, p.s, p.s / 2); x.restore();
+    }
+    if (age < 3600) requestAnimationFrame(step); else x.clearRect(0, 0, w, h);
+  })(t0);
+}
+
+/* ───────── init ───────── */
+setCountry(detectIso());
+try { const last = JSON.parse(load('wk_last') || 'null'); if (last && byIso[last.iso]) { setCountry(last.iso); els.num.value = last.local || ''; } } catch {}
+validate(); setStep(1);
+if (innerWidth > 700) els.num.focus();
+addEventListener('resize', () => { const n = [...document.querySelectorAll('#steps li')].findIndex(li => li.classList.contains('active')) + 1; setStep(n || 1); });
+})();
+</script>
+</body>
+</html>
